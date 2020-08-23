@@ -1,0 +1,18 @@
+all: liblcdwrite.so simple_lcd
+
+rebuild: clean all
+
+lcd_write.o: src/lcd_write.c include/lcd_write.h
+	gcc -std=c11 -Wall -O0 -I./include  -c -fpic -o lcd_write.o src/lcd_write.c
+
+liblcdwrite.so: lcd_write.o 
+	gcc -Wall -shared -o liblcdwrite.so lcd_write.o
+
+simple_lcd: include/lcd_write.h liblcdwrite.so src/simple_lcd.c 
+	gcc -std=c11 -Wall -O0 -L. -I./include  -o simple_lcd src/simple_lcd.c -llcdwrite
+
+clean:
+	rm -f *.o *.so  simple_lcd
+
+test:
+	sudo LD_LIBRARY_PATH=$(PWD):$(LD_LIBRARY_PATH) ./simple_lcd

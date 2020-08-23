@@ -1,0 +1,24 @@
+all: liblcdwrite.so parseCmdLine.o simple_lcd 
+
+rebuild: clean all
+
+lcd.o: ./include/lcd.hpp ./src/lcd.cpp
+	g++ -I./include -std=c++17 -Wall -O0 -c -fpic -o lcd.o ./src/lcd.cpp
+
+liblcdwrite.so: lcd.o
+	g++ -Wall -shared -o liblcdwrite.so lcd.o
+
+parseCmdLine.o: ./include/parseCmdLine.hpp ./src/parseCmdLine.cpp
+	g++ -I./include -c -std=c++17 -Wall -O0 -o parseCmdLine.o ./src/parseCmdLine.cpp
+
+simple_lcd.o: ./include/lcd.hpp parseCmdLine.o
+	g++ -I./include -c -std=c++17 -Wall -O0 -o simple_lcd.o ./src/simple_lcd.cpp  
+
+simple_lcd: liblcdwrite.so simple_lcd.o parseCmdLine.o
+	g++ -L. -std=c++17 -Wall -o simple_lcd simple_lcd.o parseCmdLine.o  -llcdwrite
+
+clean:
+	rm -f *.o *.so simple_lcd
+
+test:
+	sudo LD_LIBRARY_PATH=$(PWD):$(LD_LIBRARY_PATH) ./simple_lcd 

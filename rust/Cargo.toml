@@ -1,0 +1,19 @@
+[package]
+name = "lcd"
+version = "0.5.0"
+edition = "2018"
+authors = [ "Gabiele Bonacini <gabriele.bonacini@protonmail.com>" ]
+
+[lib]
+name = "lcd_lib"
+path = "lcd_lib/src/lib.rs" 
+
+[[bin]]
+name = "simple_lcd_r"
+path = "simple_lcd/src/main.rs" 
+
+[dependencies]
+libc = "*"
+errno = "*"
+clap = "*"
+

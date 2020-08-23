@@ -1,0 +1,30 @@
+.TH LCD_WRITE 1 "July 2020" Linux "User Manuals"                                  
+.SH NAME                                                                     
+lcd_write \- An utility to write text on HD44780 LCD displays.
+.SH SYNOPSIS                                                                 
+.B  lcd_write [-t text] [-r row] 
+          [-R maxrows] [-c maxcolumns] [-i] [-d device] [-a device hex address] 
+          [-h] 
+.SH DESCRIPTION                                                              
+lcd_write can send text to a specific row of an HD44780 compatible display.  It supports many display simultaneously, setting accordingly address and device special file path.
+.SH OPTIONS                                                       
+.IP -t\ text 
+Specifies the text string intended to be shown on the display. A space before the value is necessary.
+.IP -r\ row_number
+Specifies the row number ( starting from 1 ) to select the destination of the text string. A space before the value is necessary.
+.IP -R\ maxRows
+Specifies the maximum number of rows available. A space before the value is necessary.
+.IP -c\ maxCols
+Specifies the maximum number of columns available. A space before the value is necessary.
+.IP -i 
+Sends the init sequence to the display. Mandatory the first time, it initializes the device and clearing the present texr string.  
+.IP -d\ device                                                                      
+Specifies the special file, the display interface on /dev. A space before the value is necessary.
+.IP -a\ address
+Specifies the address on the I2C chain assigned to the display. A space before the value is necessary.
+.IP -h
+A short description of lcd_write command line syntax.
+.SH BUGS                                                                     
+This program is a beta, please send any bug, with information to reproduce it, to the address specified below.
+.SH AUTHOR                                                                   
+Gabriele Bonacini <gabriele.bonacini@protonmail.com>
