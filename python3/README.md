@@ -34,6 +34,15 @@ You can print these instructions usinf -h, example:
 -h or --help 
         Print this help synopsis.
 
+Environment:
+===========
+
+* LCD_CONFIG_FILE specifies full path of configuration file. If it isn't present, program will look for ./simpleLcd.conf
+* Example:
+```
+LCD_CONFIG_FILE=/home/bg/_Service_Scripts/_LcdDaemon/simpleLcd.conf
+```
+
 Configuration:
 ==============
 
