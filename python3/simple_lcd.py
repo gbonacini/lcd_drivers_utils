@@ -259,21 +259,31 @@ class CmdLineParams:
         return self.status.get('dump', False)
 
 if __name__ == "__main__":
+
+    errFileName =  None
+    errFileDir  =  None
+    configFile  =  'simpleLcd.conf'
+
     try:
+        if os.getenv('LCD_CONFIG_FILE') is not None:
+             configFile = os.getenv('LCD_CONFIG_FILE')
         config = cfg.RawConfigParser(allow_no_value=False)
 
-        with open('simpleLcd.conf', 'r') as cFile:
+        with open(configFile, 'r') as cFile:
             config.read_string(cFile.read())
 
-        #stdWait   =  int(config['time']['wait'])
-        pageTimer =  int(config['time']['pager'])
-        columns   =  int(config['lcd']['columns'])
-        rows      =  int(config['lcd']['rows'])
-        address   =  int(config['i2c']['address'], 16)
-        port      =  int(config['i2c']['port'])
+        #stdWait    =  int(config['time']['wait'])
+        pageTimer   =  int(config['time']['pager'])
+        columns     =  int(config['lcd']['columns'])
+        rows        =  int(config['lcd']['rows'])
+        address     =  int(config['i2c']['address'], 16)
+        port        =  int(config['i2c']['port'])
+
+        errFileName =  config['filesystem']['LOGNAME']
+        errFileDir  =  config['filesystem']['LOGDIR']
 
         cmdLineParams = CmdLineParams(rows, columns, sys.argv[1:])
-    
+
         lcd = lcd_writer.lcd(rows, columns, port, address )
     
         if cmdLineParams.isDumped(): 
@@ -291,7 +301,10 @@ if __name__ == "__main__":
             lcd.setDump(False)
     
     except:
-        errFile = 'simpleLcd.log'
+        errFile = '/tmp/simpleLcd.log'
+        if errFileName is not None and errFileDir is not None:
+            errFile     =  f"{errFileDir}/{errFileName}"
+
         with open(errFile, 'w') as errLog:
             print('{}'.format(trbck.format_exc()), file=errLog)
             print('Error: see log file: {}'.format(errFile), file=sys.stderr)
