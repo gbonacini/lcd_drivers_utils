@@ -3,6 +3,7 @@ README:
 
 * Libraries and utilites to write text on HD44780 LCD displays.
 * Experimental version intended to test runtime with COMPCERT.
+* Requires COMPCERT ( ccomp ) installed;
 * Configure with:
 ```shell
   ./configure CC=ccomp
