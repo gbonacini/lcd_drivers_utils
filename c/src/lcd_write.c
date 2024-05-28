@@ -20,6 +20,8 @@
 
 #include <lcd_write.h>	
 
+#include <assert.h>
+
 void hexCmd(int fd, unsigned char cmd, unsigned char mode){
     unsigned char output[OUTBUFFSIZE];
     const unsigned char LCD_BACKLIGHT=0x08;
@@ -45,6 +47,8 @@ void hexCmd(int fd, unsigned char cmd, unsigned char mode){
 }
 
 void writeLine(int fd, size_t maxRows, unsigned char maxCols, const char* const msg, unsigned int row, bool clean) {
+    const unsigned char   MAX_BUFF =  64;
+    assert(maxCols + 1 <= MAX_BUFF);
 
     // add ctrl params
     unsigned char* ADDRS = malloc( maxRows * sizeof(unsigned char));
