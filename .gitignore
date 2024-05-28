@@ -31,3 +31,17 @@ libtool
 stamp-h1
 *tgz
 .DS_Store
+*AppleDouble*
+*swo
+*dSYM
+*gz
+*tar
+ccomp/Makefile
+ccomp/autom4te.cache
+ccomp/config.status
+ccomp/src/.deps/*
+ccomp/include/config.h
+ccomp/libtool
+ccomp/include/config.h.in~
+ccomp/include/stamp-h1
+ccomp/files
